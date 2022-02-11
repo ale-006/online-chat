@@ -51,7 +51,7 @@
           item.textContent = msg[1] + ": " + msg[0];
           item.style.backgroundColor = msg[2]
           messages.appendChild(item);
-          window.scrollTo(0, document.body.scrollHeight + 50);
+          window.scrollTo(0, document.body.scrollHeight + 55);
           document.getElementById("messageNotify").play()
       });
 
@@ -60,7 +60,7 @@
         item.textContent = (nick || "A noname user") + " just joined the chat! 👋"
         item.style.backgroundColor = "#4ff02b"
         messages.appendChild(item)
-        window.scrollTo(0, document.body.scrollHeight + 50)
+        window.scrollTo(0, document.body.scrollHeight + 55)
         document.getElementById("messageNotify").play()
       })
 
@@ -101,7 +101,7 @@ body {
   flex-grow: 2;
   border-radius: 0em;
   margin: 0.5em;
-  height: 3em;
+  height: 2.9em;
   margin-bottom: 0em;
   margin-top: 1em;
   width: 30em;
