@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WhatsWeb</title>
+    <meta name="description" content="A website to chat freely with other anonymous users!">
+    <meta name="author" content="WhatsAnonimous">
+    <meta name="color" content="#00FBFF">
+    <meta name="theme-color" content="#00FBFF">
+    <meta name="og:image" content="https://cdn-icons-png.flaticon.com/512/1041/1041916.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" type="image/x-icon"/>
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" type="image/x-icon"/>
+    <link rel="stylesheet" href="https://googledrive.com/host/1-_XVpvwD5V9wufblQJGFX28iZGq3T7WB/">
+</head>
+
+<body onload="sendWelcome()">
+    <img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" style="float:left;margin: 10px;width: 35px;height: 35px;"><h1>WhatsAnonimous</h1>
+    <h4>&nbsp; &nbsp; Color: <input type="color" id="color" value="#19DCF5"> &middot; Nickname: <input type="text" id="nick"></h4>
+    <ul id="messages"></ul>
+    <form id="form" action="">
+      <input id="input" autocomplete="off" placeholder="Write a message and hit enter to send...">
+    </form>
+    <audio style="display: none" id="messageNotify" src="https://cdn.sndup.net/nsqg/juntos-607_i4rd00hm.mp3?token=BRgrJSLn5DhwJtxxTkQZNzspsv7lQ56TmhzTM68oFJU&token_path=%2Fnsqg%2F&expires=1644593506"></audio>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var nickk;
+      var socket = io();
+
+      var messages = document.getElementById('messages');
+      var form = document.getElementById('form');
+      var input = document.getElementById('input');
+      var color = document.getElementById("color")
+      var nickname = document.getElementById("nick")
+
+      form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          if(!nickname.value) {
+            nickname.style.border = "3px dashed red"
+          }
+          if(input.value && nickname.value) {
+            let info = [input.value, nickname.value, color.value]
+            socket.emit('message', info);
+            input.value = '';
+          }
+      });
+
+      socket.on('message', function(msg) {
+          var item = document.createElement('li');
+          item.textContent = msg[1] + ": " + msg[0];
+          item.style.backgroundColor = msg[2]
+          messages.appendChild(item);
+          window.scrollTo(0, document.body.scrollHeight + 50);
+          document.getElementById("messageNotify").play()
+      });
+
+      socket.on("welcome", function(nick) {
+        var item = document.createElement("li")
+        item.textContent = (nick || "A noname user") + " just joined the chat! 👋"
+        item.style.backgroundColor = "#4ff02b"
+        messages.appendChild(item)
+        window.scrollTo(0, document.body.scrollHeight + 50)
+        document.getElementById("messageNotify").play()
+      })
+
+      function sendWelcome() {
+        let nickname = prompt("👋 Welcome! Insert your nickname to continue...")
+        socket.emit("welcome", nickname)
+        nickk = nickname
+        document.getElementById("nick").value = nickname
+      }
+    </script>
+  </body>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap');
+body {
+  margin: 0;
+  padding-bottom: 3rem;
+  font-family: 'Oswald', sans-serif;
+}
+
+#form {
+  background: none;
+  padding: 1em;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  height: 6em;
+  box-sizing: border-box;
+}
+#input {
+  font-size: 1em;
+  position: fixed;
+  bottom: 0.5em;
+  left: 0em;
+  border: none;
+  padding: 0 1em;
+  flex-grow: 2;
+  border-radius: 0em;
+  margin: 0.5em;
+  height: 3em;
+  margin-bottom: 0em;
+  margin-top: 1em;
+  width: 30em;
+  border-bottom: 1px solid black;
+}
+#nick {
+  border: 1px solid gray;
+  left: 6em;
+  padding: 0 1em;
+  border: none;
+  height: 2em;
+  bottom: 1em;
+  border-bottom: 1px solid black;
+}
+#nick:focus {
+  outline: none;
+}
+#input:focus {
+  outline: none;
+}
+#form > button {
+  left: 52em;
+  background: #333;
+  border: none;
+  padding: 0 1rem;
+  border-radius: 2em;
+  outline: none;
+  color: #fff;
+  width: 10em;
+  height: 3em;
+}
+
+input[type="color"] {
+  border: none;
+  width: 2em;
+  height: 2em;
+  background: none;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+  border: none;
+  background: none;
+}
+input[type="color"]::-webkit-color-swatch {
+  border-radius: 100px;
+  border-color: transparent;
+}
+
+#messages {
+  list-style-type: none;
+  margin: 0;padding: 0;
+}
+#messages > li {
+  padding: 0.5rem 1rem;
+  border-top-left-radius: 20px;
+}
+#messages > li:nth-child(odd) {
+  background: #efefef;
+}
+.vline {
+  margin-right: 1px solid black;
+  float: left;
+  width: 1px;
+}
+  </style>
+</html>

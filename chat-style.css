@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap');
+body {
+  margin: 0;
+  padding-bottom: 3rem;
+  font-family: 'Oswald', sans-serif;
+}
+
+#form {
+  background: none;
+  padding: 1em;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  height: 6em;
+  box-sizing: border-box;
+}
+#input {
+  font-size: 1em;
+  position: fixed;
+  bottom: 0.5em;
+  left: 0em;
+  border: none;
+  padding: 0 1em;
+  flex-grow: 2;
+  border-radius: 0em;
+  margin: 0.5em;
+  height: 3em;
+  margin-bottom: 0em;
+  margin-top: 1em;
+  width: 30em;
+  border-bottom: 1px solid black;
+}
+#nick {
+  border: 1px solid gray;
+  left: 6em;
+  padding: 0 1em;
+  border: none;
+  height: 2em;
+  bottom: 1em;
+  border-bottom: 1px solid black;
+}
+#nick:focus {
+  outline: none;
+}
+#input:focus {
+  outline: none;
+}
+#form > button {
+  left: 52em;
+  background: #333;
+  border: none;
+  padding: 0 1rem;
+  border-radius: 2em;
+  outline: none;
+  color: #fff;
+  width: 10em;
+  height: 3em;
+}
+
+input[type="color"] {
+  border: none;
+  width: 2em;
+  height: 2em;
+  background: none;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+  border: none;
+  background: none;
+}
+input[type="color"]::-webkit-color-swatch {
+  border-radius: 100px;
+  border-color: transparent;
+}
+
+#messages {
+  list-style-type: none;
+  margin: 0;padding: 0;
+}
+#messages > li {
+  padding: 0.5rem 1rem;
+}
+#messages > li:nth-child(odd) {
+  background: #efefef;
+}
+.vline {
+  margin-right: 1px solid black;
+  float: left;
+  width: 1px;
+}
