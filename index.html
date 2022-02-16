@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>WhatsAnonimous</title>
+    <title>chat-online</title>
     <meta name="description" content="A website to chat freely with other anonymous users!">
     <meta name="author" content="WhatsAnonimous">
     <meta name="color" content="#00FBFF">
@@ -15,11 +15,11 @@
 </head>
 
 <body onload="sendWelcome()">
-    <img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" style="float:left;margin: 10px;width: 35px;height: 35px;"><h1>WhatsAnonimous</h1>
-    <h4>&nbsp; &nbsp; Color: <input type="color" id="color" value="#19DCF5"> &middot; Nickname: <input type="text" id="nick"></h4>
+    <img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" style="float:left;margin: 10px;width: 35px;height: 35px;"><h1>chat-online</h1>
+    <h4>&nbsp; &nbsp; Colore: <input type="color" id="color" value="#19DCF5"> &middot; Nickname: <input type="text" id="nick"></h4>
     <ul id="messages"></ul>
     <form id="form" action="">
-      <input id="input" autocomplete="off" placeholder="Write a message and hit enter to send...">
+      <input id="input" autocomplete="off" placeholder="Scrivi un messaggio e premi invio per inviare...">
     </form>
     <audio style="display: none" id="messageNotify" src="https://cdn.sndup.net/nsqg/juntos-607_i4rd00hm.mp3?token=BRgrJSLn5DhwJtxxTkQZNzspsv7lQ56TmhzTM68oFJU&token_path=%2Fnsqg%2F&expires=1644593506"></audio>
 
@@ -57,7 +57,7 @@
 
       socket.on("welcome", function(nick) {
         var item = document.createElement("li")
-        item.textContent = (nick || "A noname user") + " just joined the chat! 👋"
+        item.textContent = (nick || "\"Persona anonima\"") + " just joined the chat! 👋"
         item.style.backgroundColor = "#4ff02b"
         messages.appendChild(item)
         window.scrollTo(0, document.body.scrollHeight + 55)
@@ -65,7 +65,7 @@
       })
 
       function sendWelcome() {
-        let nickname = prompt("👋 Welcome! Insert your nickname to continue...")
+        let nickname = prompt("👋 Ciao! Inserisci un nickname per continuare...")
         socket.emit("welcome", nickname)
         nickk = nickname
         document.getElementById("nick").value = nickname
