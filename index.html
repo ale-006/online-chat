@@ -57,7 +57,7 @@
 
       socket.on("welcome", function(nick) {
         var item = document.createElement("li")
-        item.textContent = (nick || "\"Persona anonima\"") + " just joined the chat! 👋"
+        item.textContent = (nick || "\"Persona anonima\"") + " è entrat* in chat! 👋"
         item.style.backgroundColor = "#4ff02b"
         messages.appendChild(item)
         window.scrollTo(0, document.body.scrollHeight + 55)
