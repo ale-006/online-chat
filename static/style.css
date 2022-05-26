@@ -83,6 +83,14 @@ input[type="color"]::-webkit-color-swatch {
   display: none;
 }
 
+#download {
+  float: right;
+}
+#download img {
+  width: 2em;
+  margin-right: 1em;
+}
+
 @media screen and (max-width: 600px) {
   .r {
     display: block;

@@ -1,5 +1,11 @@
 var nickk;
 var socket = io();
+var daLeggere = 0
+var chat = {
+  startDate: new Date().getTime(),
+  stopDate: null,
+  messages: []
+}
 
 var messages = document.getElementById('messages');
 var form = document.getElementById('form');
@@ -32,6 +38,15 @@ socket.on('message', function(msg) {
     item.style.backgroundColor = msg[2]
     messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight + 55);
+    if(document.visibilityState == "hidden") {
+      daLeggere++
+      document.title = `(${daLeggere}) chat-online`
+    }
+    chat.messages.push({
+      author: msg[1],
+      text: msg[0],
+      time: new Date().getTime()
+    })
 });
 
 socket.on("welcome", function(nick) {
@@ -48,3 +63,17 @@ function sendWelcome() {
   nickk = nickname
   document.getElementById("nick").value = nickname
 }
+
+document.addEventListener("visibilitychange", e => {
+  if(document.visibilityState == "visible") {
+    document.title = "chat-online"
+    daLeggere = 0
+  }
+})
+
+let down = document.getElementById("download")
+down.addEventListener("click", e => {
+  chat.stopDate = new Date().getTime()
+  let w = window.open("./chat.html", "__blank")
+  w.document.write(JSON.stringify(chat))
+})
