@@ -12,6 +12,7 @@ var form = document.getElementById('form');
 var input = document.getElementById('input');
 var color = document.getElementById("color")
 var nickname = document.getElementById("nick")
+var m = ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"]
 
 form.addEventListener('submit', function(e) {
     e.preventDefault();
@@ -19,13 +20,18 @@ form.addEventListener('submit', function(e) {
       alert("⚠️ Devi inserire un nickname per poter inviare messaggi!")
     }
     if(input.value && nickname.value) {
-        let inp;
+      let m = ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"]
+        let inp = "";
         if(document.getElementById("nov").checked) {
-            inp = input.value.replace("a", "").replace("e", "").replace("i", "").replace("o", "").replace("u", "")
+          let args = input.value.split(/\s+/)
+          args.forEach(a => {
+            let aa = a.replace(/[aeiou]/g, "")
+            inp += " []" + aa
+          })
         } else {
             inp = input.value
         }
-      let info = [inp, nickname.value, color.value]
+      let info = [inp, nickname.value, color.value, new Date().getDate()+" "+m[new Date().getMonth()]+" "+new Date().getFullYear()+" - "+new Date().getHours()+":"+new Date().getMinutes()]
       socket.emit('message', info);
       input.value = '';
       input.click()
@@ -33,10 +39,9 @@ form.addEventListener('submit', function(e) {
 });
 
 socket.on('message', function(msg) {
-    var item = document.createElement('li');
-    item.textContent = msg[1] + ": " + msg[0];
-    item.style.backgroundColor = msg[2]
-    messages.appendChild(item);
+  let m = ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"]
+  let h = `<div style="background-color: ${msg[2]}"><p>${msg[1]}: ${msg[0]}</p><br><p class="time">${new Date().getDate()+" "+m[new Date().getMonth()]+" "+new Date().getFullYear()+" - "+new Date().getHours()+":"+new Date().getMinutes()}</p></div>`
+    messages.innerHTML += h
     window.scrollTo(0, document.body.scrollHeight + 55);
     if(document.visibilityState == "hidden") {
       daLeggere++
@@ -49,17 +54,16 @@ socket.on('message', function(msg) {
     })
 });
 
-socket.on("welcome", function(nick) {
-  var item = document.createElement("li")
-  item.textContent = (nick || "\"Persona anonima\"") + " è entrat* in chat! 👋"
-  item.style.backgroundColor = "#4ff02b"
-  messages.appendChild(item)
+socket.on("welcome", function(data) {
+  let h = `<div style="background-color: #4ff02b"><p>${data[0] || "\"Persona anonima\""} è entrat* in chat! 👋</p><br><p class="time">${new Date().getDate()+" "+m[new Date().getMonth()]+" "+new Date().getFullYear()+" - "+new Date().getHours()+":"+new Date().getMinutes()}</p></div>`
+  messages.innerHTML += h
   window.scrollTo(0, document.body.scrollHeight + 55)
 })
 
 function sendWelcome() {
   let nickname = prompt("👋 Ciao! Inserisci un nickname per continuare...")
-  socket.emit("welcome", nickname)
+  let m = ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"]
+  socket.emit("welcome", [nickname, new Date().getDate()+" "+m[new Date().getMonth()]+" "+new Date().getFullYear()+" - "+new Date().getHours()+":"+new Date().getMinutes()])
   nickk = nickname
   document.getElementById("nick").value = nickname
 }

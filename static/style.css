@@ -61,14 +61,23 @@ input[type="color"]::-webkit-color-swatch {
 
 #messages {
   margin-top: 5.5em;
-  list-style-type: none;
   margin: 0;padding: 0;
 }
-#messages > li {
-  margin-top: 0.2em;
-  padding: 0.5rem 1rem;
+#messages > div {
+  margin-top: 0.1em;
+  padding: 0.5rem 0.7rem;
+  padding-bottom: 1.3em;
 }
-#messages > li:nth-child(odd) {
+#messages > div > p {
+  margin: 0;
+  font-size: 1.2em;
+  float: left;
+}
+#messages > div > p.time {
+  font-size: 0.8em;
+  float: right;
+}
+#messages > div:nth-child(odd) {
   background: #efefef;
 }
 
@@ -98,5 +107,7 @@ input[type="color"]::-webkit-color-swatch {
   .pc {
     display: none;
   }
-
+  #download {
+    display: none;
+  }
 }

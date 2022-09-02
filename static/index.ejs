@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>chat-online</title>
+    <meta name="description" content="Un sito per chattare online con i tuoi amici in modo gratuito.">
+    <meta name="author" content="chat-online">
+    <meta name="color" content="#00FBFF">
+    <meta name="theme-color" content="#00FBFF">
+    <meta name="og:image" content="https://cdn-icons-png.flaticon.com/512/1041/1041916.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" type="image/x-icon"/>
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" type="image/x-icon"/>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+
+<body onload="sendWelcome()">
+  <div class="head">
+    <img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" style="float:left;margin:0.5em;margin-top:1.8em;width: 35px;height: 35px;"><h1>chat-online</h1>
+    <span id="download"><img src="static/export.png"></span>
+    <h4><span class="pc">&nbsp; &nbsp;</span> Colore: <input type="color" id="color" value="#19DCF5"> <br class="r"><span class="pc">&middot;</span> Nickname: <input type="text" id="nick"> <br class="r"><span class="pc">&middot;</span> <label for="nov">Abbreviazioni</label><input type="checkbox" id="nov"></h4>
+  </div>
+
+  <div class="chat">
+      <section id="messages">
+        <% if(msgs) { msgs.forEach(m => { %>
+          <div style="background-color: <%= m.color %>">
+            <% if(m.author) { %>
+              <p><%= m.author %>: <%= m.text %></p><br>
+            <% } else { %>
+              <p><%= m.text %></p><br>
+            <% } %>
+            <p class="time"><%= m.date %></p>
+          </div>
+        <% })} %>
+      </section>
+  </div>
+  <form id="form">
+    <input id="input" autocomplete="off" placeholder="Scrivi un messaggio..."><button type="submit">invia</button>
+  </form>
+</body>
+</html>
+<script src="/socket.io/socket.io.js"></script>
+<script src="static/script.js"></script>
